@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UAE Coding Day Quiz</title>
+<style>
+  /* --- General Page Style --- */
+  body { 
+    font-family: Arial, sans-serif; 
+    background: url('Emirati.png') no-repeat center center fixed; 
+    background-size: cover;
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: flex-start; 
+    padding: 50px; 
+    min-height: 100vh; 
+  }
+
+  /* --- Header --- */
+  h1 { 
+    color: white; 
+    background-color: rgba(0, 0, 0, 0.4);
+    padding: 10px 25px;
+    border-radius: 10px;
+  }
+
+  /* --- Quiz Box --- */
+  #quiz-container { 
+    background: rgba(255, 255, 255, 0.9); 
+    padding: 30px; 
+    border-radius: 15px; 
+    box-shadow: 0 6px 15px rgba(0,0,0,0.3); 
+    max-width: 600px; 
+    width: 90%; 
+    text-align: center; 
+  }
+
+  /* --- Buttons --- */
+  button { 
+    padding: 12px 25px; 
+    margin: 10px; 
+    font-size: 16px; 
+    cursor: pointer; 
+    border: none; 
+    border-radius: 10px; 
+    transition: 0.3s; 
+  }
+
+  button:hover { 
+    transform: scale(1.05); 
+  }
+
+  .option-btn { 
+    background: #00732F; 
+    color: #fff; 
+  }
+
+  #redo-btn { 
+    background: #D71A28; 
+    color: #fff; 
+    display: none; 
+  }
+
+  /* --- Results --- */
+  #result { 
+    margin-top: 20px; 
+    font-weight: bold; 
+    font-size: 18px; 
+  }
+
+  #score { 
+    margin-top: 20px; 
+    font-size: 20px; 
+    color: #D71A28; 
+    font-weight: bold; 
+  }
+</style>
+</head>
+<body>
+
+<h1>🎉 UAE Coding Day Quiz 🎉</h1>
+
+<div id="quiz-container">
+  <p id="question">Question will appear here</p>
+  <div id="options">
+    <button class="option-btn" onclick="answer(0)">Option 1</button>
+    <button class="option-btn" onclick="answer(1)">Option 2</button>
+    <button class="option-btn" onclick="answer(2)">Option 3</button>
+  </div>
+  <p id="result"></p>
+  <p id="score"></p>
+  <button id="redo-btn" onclick="restartQuiz()">🔄 Redo Quiz</button>
+</div>
+
+<script>
+const quiz = [
+  { question: "What is the capital of the UAE?", options: ["Dubai", "Abu Dhabi", "Sharjah"], answer: 1 },
+  { question: "Which is the tallest building in the UAE?", options: ["Burj Khalifa", "Burj Al Arab", "Etihad Tower"], answer: 0 },
+  { question: "Which animal is symbolic in UAE culture?", options: ["Camel", "Elephant", "Tiger"], answer: 0 },
+  { question: "Which sea borders the UAE?", options: ["Red Sea", "Arabian Gulf", "Mediterranean Sea"], answer: 1 },
+  { question: "What is UAE’s National Day?", options: ["2nd December", "30th November", "15th January"], answer: 0 },
+  { question: "Which UAE emirate is famous for its heritage sites and arts?", options: ["Sharjah", "Ras Al Khaimah", "Ajman"], answer: 0 },
+  { question: "What is the official language of UAE?", options: ["Arabic", "English", "Urdu"], answer: 0 },
+  { question: "Which is a traditional Emirati sport?", options: ["Falconry", "Cricket", "Basketball"], answer: 0 }
+];
+
+let current = 0;
+let score = 0;
+
+function showQuestion() {
+  document.getElementById("question").textContent = quiz[current].question;
+  const buttons = document.querySelectorAll("#options button");
+  buttons.forEach((btn, i) => { btn.textContent = quiz[current].options[i]; });
+  document.getElementById("result").textContent = "";
+  document.getElementById("score").textContent = "";
+}
+
+function answer(i) {
+  if (i === quiz[current].answer) { 
+    score++; 
+    document.getElementById("result").textContent = "✅ Correct!";
+  } else { 
+    document.getElementById("result").textContent = "❌ Wrong!";
+  }
+  current++;
+  if (current < quiz.length) {
+    setTimeout(showQuestion, 1000);
+  } else {
+    setTimeout(() => {
+      document.getElementById("question").textContent = "🎉 Quiz Finished! 🎉";
+      document.getElementById("options").style.display = "none";
+      document.getElementById("result").textContent = "";
+      document.getElementById("score").textContent = `Your Score: ${score} / ${quiz.length}`;
+      document.getElementById("redo-btn").style.display = "inline-block";
+    }, 1000);
+  }
+}
+
+function restartQuiz() {
+  current = 0;
+  score = 0;
+  document.getElementById("options").style.display = "block";
+  document.getElementById("redo-btn").style.display = "none";
+  showQuestion();
+}
+
+showQuestion();
+</script>
+
+</body>
+</html>
